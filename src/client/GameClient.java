@@ -46,8 +46,20 @@ public class GameClient {
 
                 while (true) {
 
-                    System.out.println("\nType username to invite OR yes/no:");
+                    System.out.println("\nType username to invite OR yes/no OR a letter:");
                     String input = scanner.nextLine();
+
+                    // LETTER GUESS
+                    if (input.length() == 1 &&
+                            Character.isLetter(input.charAt(0))) {
+
+                        server.guessLetter(
+                                username,
+                                input.charAt(0)
+                        );
+
+                        continue;
+                    }
 
                     // ACCEPT INVITATION
                     if (input.equalsIgnoreCase("yes")) {
