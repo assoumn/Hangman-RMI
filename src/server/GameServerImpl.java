@@ -69,9 +69,29 @@ public class GameServerImpl extends UnicastRemoteObject
                                   boolean accepted)
             throws RemoteException {
 
-        System.out.println(to +
-                (accepted ? " accepted " : " rejected ")
-                + from);
+        ClientCallback inviter = players.get(from);
+        ClientCallback receiver = players.get(to);
+
+        if (accepted) {
+
+            System.out.println(to + " accepted invitation from " + from);
+
+            inviter.receiveMessage(
+                    to + " accepted your invitation."
+            );
+
+            receiver.receiveMessage(
+                    "Game starting with " + from
+            );
+
+        } else {
+
+            System.out.println(to + " rejected invitation from " + from);
+
+            inviter.receiveMessage(
+                    to + " rejected your invitation."
+            );
+        }
     }
 
     @Override

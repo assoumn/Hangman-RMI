@@ -9,6 +9,8 @@ import java.util.List;
 public class ClientCallbackImpl extends UnicastRemoteObject
         implements ClientCallback {
 
+    private String pendingInviter;
+
     protected ClientCallbackImpl() throws RemoteException {
         super();
     }
@@ -24,8 +26,11 @@ public class ClientCallbackImpl extends UnicastRemoteObject
     public void receiveInvitation(String fromPlayer)
             throws RemoteException {
 
+        pendingInviter = fromPlayer;
+
         System.out.println("\n========================");
         System.out.println("Invitation from: " + fromPlayer);
+        System.out.println("Type yes/no");
         System.out.println("========================\n");
     }
 
@@ -58,5 +63,9 @@ public class ClientCallbackImpl extends UnicastRemoteObject
             throws RemoteException {
 
         System.out.println("Game Over: " + result);
+    }
+
+    public String getPendingInviter() {
+        return pendingInviter;
     }
 }

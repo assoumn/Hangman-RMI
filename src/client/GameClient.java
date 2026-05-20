@@ -22,7 +22,7 @@ public class GameClient {
                     (ServerInterface) registry.lookup("HangmanServer");
 
             // Create callback object
-            ClientCallback callback =
+            ClientCallbackImpl callback =
                     new ClientCallbackImpl();
 
             // Ask username
@@ -30,6 +30,7 @@ public class GameClient {
 
             System.out.print("Enter username: ");
             String username = scanner.nextLine();
+            String[] pendingInvitation = new String[1];
 
             // Register player
             boolean success =
@@ -45,16 +46,58 @@ public class GameClient {
 
                 while (true) {
 
-                    System.out.println("\nType a username to invite:");
-                    String target = scanner.nextLine();
+                    System.out.println("\nType username to invite OR yes/no:");
+                    String input = scanner.nextLine();
 
-                    if (!target.equals(username)) {
+                    // ACCEPT INVITATION
+                    if (input.equalsIgnoreCase("yes")) {
 
-                        server.invitePlayer(username, target);
+                        String inviter = callback.getPendingInviter();
 
-                    } else {
+                        if (inviter != null) {
 
-                        System.out.println("You cannot invite yourself.");
+                            server.respondInvitation(
+                                    inviter,
+                                    username,
+                                    true
+                            );
+
+                        } else {
+
+                            System.out.println("No pending invitation.");
+                        }
+                    }
+
+                    // REJECT INVITATION
+                    else if (input.equalsIgnoreCase("no")) {
+
+                        String inviter = callback.getPendingInviter();
+
+                        if (inviter != null) {
+
+                            server.respondInvitation(
+                                    inviter,
+                                    username,
+                                    false
+                            );
+
+                        } else {
+
+                            System.out.println("No pending invitation.");
+                        }
+                    }
+
+                    // SEND INVITATION
+                    else {
+
+                        if (!input.equals(username)) {
+
+                            server.invitePlayer(username, input);
+
+                        } else {
+
+                            System.out.println("You cannot invite yourself.");
+                        }
                     }
                 }
 
