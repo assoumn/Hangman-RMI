@@ -52,7 +52,15 @@ public class GameServerImpl extends UnicastRemoteObject
                              String to)
             throws RemoteException {
 
-        System.out.println(from + " invited " + to);
+        ClientCallback invitedPlayer = players.get(to);
+
+        if (invitedPlayer != null) {
+
+            invitedPlayer.receiveInvitation(from);
+
+            System.out.println(from +
+                    " invited " + to);
+        }
     }
 
     @Override

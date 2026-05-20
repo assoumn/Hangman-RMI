@@ -24,7 +24,9 @@ public class ClientCallbackImpl extends UnicastRemoteObject
     public void receiveInvitation(String fromPlayer)
             throws RemoteException {
 
+        System.out.println("\n========================");
         System.out.println("Invitation from: " + fromPlayer);
+        System.out.println("========================\n");
     }
 
     @Override

@@ -43,6 +43,21 @@ public class GameClient {
                 System.out.println("Online Players:");
                 System.out.println(server.getOnlinePlayers());
 
+                while (true) {
+
+                    System.out.println("\nType a username to invite:");
+                    String target = scanner.nextLine();
+
+                    if (!target.equals(username)) {
+
+                        server.invitePlayer(username, target);
+
+                    } else {
+
+                        System.out.println("You cannot invite yourself.");
+                    }
+                }
+
             } else {
 
                 System.out.println("Username already exists.");
